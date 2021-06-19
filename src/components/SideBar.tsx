@@ -1,36 +1,25 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext } from 'react'
+import { MoviesContext } from '../context/MoviesContext'
 import { Button } from './Button'
 
-interface GenreProps {
-  genres: Array<{
-    id: number
-    title: string
-    name: 'action' | 'comedy' | 'documentary' | 'drama' | 'horror' | 'family'
-  }>
-  selectedGenreId: number
-}
-
-export function SideBar(props: GenreProps) {
+export function SideBar() {
+  const {selectedGenreId, genres, setSelectedGenreId } = useContext(MoviesContext) 
   return (
-    <nav className="sidebar">
-      <nav className="sidebar">
-        <span>
-          Watch<p>Me</p>
-        </span>
-
-        {props.genres.map((genre) => {
-          return (
-            <div className="buttons-container">
-              <Button
-                key={String(genre.id)}
-                title={genre.title}
-                iconName={genre.name}
-                selected={props.selectedGenreId === genre.id}
-              />
-            </div>
-          )
-        })}
-      </nav>
-    </nav>
-  )
+  
+   <nav className="sidebar">
+        <span>Watch<p>Me</p></span>
+        
+        <div className="buttons-container">
+        {genres.map(genre => (
+          <Button
+          key={String(genre.id)}
+          title={genre.title}
+          iconName={genre.name}
+          onClick={() => setSelectedGenreId(genre.id)}
+          selected={selectedGenreId === genre.id}
+          />
+          ))}
+          </div>
+          
+      </nav> )
 }
